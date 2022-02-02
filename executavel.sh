@@ -11,7 +11,8 @@ sudo chmod 777 ./instaladores/*.AppImage
 #instalando o libfuse2 para executar o .AppImage
 if !  dpkg --list | grep libfuse2  > /dev/null 2>&1
     then
-        sudo apt install libfuse2:$arq
+        echo - Instalando Fuse ...
+        sudo apt install libfuse2:$arq   > /dev/null 2>&1
 fi
 
 #Executando o programa.
