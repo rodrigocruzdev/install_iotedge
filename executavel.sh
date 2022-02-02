@@ -1,3 +1,9 @@
+arq="$(dpkg --print-architecture)"
+arq_amd='amd'
+arq_arm='arm'
+
+#!/bin/bash
+
 #liberando acesso
 sudo chmod a+x ./instaladores/*.AppImage
 sudo chmod 777 ./instaladores/*.AppImage
