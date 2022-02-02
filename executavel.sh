@@ -4,7 +4,7 @@ arq_arm='arm'
 
 sudo apt install libfuse2:$arq
 
-sudo chmod x+a ./instaladores/*.AppImage
+sudo chmod a+x ./instaladores/*.AppImage
 sudo chmod 777 ./instaladores/*.AppImage
 
 if [[ $arq == *"$arq_amd"* ]]
