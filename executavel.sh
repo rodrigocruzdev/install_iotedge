@@ -1,27 +1,37 @@
-arq="$(dpkg --print-architecture)"
-arq_amd='amd'
-arq_arm='arm'
-
 #!/bin/bash
 
-#liberando acesso
-sudo chmod a+x ./instaladores/*.AppImage
-sudo chmod 777 ./instaladores/*.AppImage
+#VARs
+arq="$(dpkg --print-architecture)"
+arq_amd='amd'
+arq_armhf='armhf'
+arq_arm64='arm64'
+install_path="./instaladores"
+
+mkdir -p  $install_path
 
 #instalando o libfuse2 para executar o .AppImage
 if !  dpkg --list | grep libfuse2  > /dev/null 2>&1
     then
-        echo - Instalando Fuse ...
-        sudo apt install libfuse2:$arq   > /dev/null 2>&1
+        sudo apt install libfuse2:$arq
 fi
 
-#Executando o programa.
-if [[ $arq == *"$arq_amd"* ]]
-   then
-    sudo ./instaladores/install_iotedge_and_provising_device-0.1.0-x86_64.AppImage
-
-elif [[ $arq == *"$arq_arm"* ]]
-   then
-    sudo ./instaladores/install_iotedge_and_provising_device-0.1.0-armhf.AppImage
-
+#Verificando se o instalador ja esta baixado.
+if ls $install_path/ | grep install_iotedge > /dev/null 2>&1
+    #Executando o programa.
+    if [[ $arq == *"$arq_amd"* ]]
+        then
+            curl -L https://github.com/rodrigocruzdev/instaladores/raw/main/install_iotedge_and_provising_device-0.1.0-x86_64.AppImage  -o $install_path/install_iotedge_and_provising_device-0.1.0-x86_64.AppImage
+    elif [[ $arq == *"$arq_armhf"* ]]
+        then
+            curl -L https://github.com/rodrigocruzdev/instaladores/raw/main/install_iotedge_and_provising_device-0.1.0-armhf.AppImage   -o  $install_path/install_iotedge_and_provising_device-0.1.0-armhf.AppImage
+    elif [[ $arq == *"$arq_arm64"* ]]
+        then
+            curl -L https://github.com/rodrigocruzdev/instaladores/raw/main/install_iotedge_and_provising_device-0.1.0-aarch64.AppImage -o  $install_path/install_iotedge_and_provising_device-0.1.0-aarch64.AppImage
+    fi
 fi
+
+#liberando acesso
+sudo chmod a+x $install_path/*.AppImage
+sudo chmod 777 $install_path/*.AppImage
+
+sudo $install_path/*.AppImage
