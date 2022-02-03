@@ -16,7 +16,7 @@ if !  dpkg --list | grep libfuse2  > /dev/null 2>&1
 fi
 
 #Verificando se o instalador ja esta baixado.
-if ls $install_path/ | grep install_iotedge > /dev/null 2>&1
+if ! ls $install_path/ | grep install_iotedge > /dev/null 2>&1
     then
         #Executando o programa.
         if [[ $arq == *"$arq_amd"* ]]
